@@ -7,7 +7,18 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1em;
 }
+
+#gatsby-focus-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+
+
 article,
 aside,
 details,
@@ -94,8 +105,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
-  font-size: 1em;
+
 }
 figure {
   margin: 1em 40px;
@@ -198,17 +208,7 @@ html {
 *:after {
   box-sizing: inherit;
 }
-body {
-  color: hsla(0, 0%, 0%, 0.8);
-  font-family: georgia, serif;
-  font-weight: normal;
-  word-wrap: break-word;
-  font-kerning: normal;
-  -moz-font-feature-settings: "kern", "liga", "clig", "calt";
-  -ms-font-feature-settings: "kern", "liga", "clig", "calt";
-  -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
-  font-feature-settings: "kern", "liga", "clig", "calt";
-}
+
 img {
   max-width: 100%;
   margin-left: 0;

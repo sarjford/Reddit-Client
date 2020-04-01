@@ -1,6 +1,4 @@
-import React, { 
-  // useState,
-  useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { Link } from "gatsby"
 
 
@@ -12,22 +10,22 @@ import ListingContainer from "../components/listingContainer"
 // import SEO from "../components/seo"
 
 
-const IndexPage = (props) => {
+const RisingPage = (props) => {
 
   // console.log(props.location.pathname)
 
 
   // const [seconds, setSeconds] = useState();
 
-  useEffect(() => {
+  // useEffect(() => {
 
-  });
+  // });
 
   return (
     <div>
       <ListingContainer
         endpoint="subreddit"
-        category="new"
+        category="rising"
       />
     </div>
   )
@@ -37,4 +35,4 @@ const IndexPage = (props) => {
 //   children: PropTypes.node.isRequired,
 // }
 
-export default IndexPage
+export default RisingPage

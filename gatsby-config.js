@@ -1,3 +1,5 @@
+const { createProxyMiddleware } = require("http-proxy-middleware")
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -5,7 +7,12 @@ module.exports = {
     author: `@gatsbyjs`,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-plugin-sass`
+    },
+    {
+      resolve: `gatsby-plugin-react-helmet`
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -13,8 +20,12 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-sharp`
+    },
+    {
+      resolve: `gatsby-plugin-sharp`
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -27,8 +38,35 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: `gatsby-plugin-layout`,
+      options: {
+        component: require.resolve(`${__dirname}/src/components/Layout`),
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
+  developMiddleware: app => {
+    app.use(
+      "/.netlify/functions/",
+      createProxyMiddleware({
+        target: "http://localhost:9000",
+        pathRewrite: {
+          "/.netlify/functions/": "",
+        },
+      })
+    )
+  },
 }
+
+
+  // developMiddleware: app => {
+  //   app.use(
+  //     "/api",
+  //     proxy({
+  //       target: "http://localhost:4000",
+  //     })
+  //   )
+  // },

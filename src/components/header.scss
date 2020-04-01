@@ -1,0 +1,47 @@
+.app-header {
+  display: flex;
+  font-size: 14px;
+
+  .link {
+    border-radius: 20px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    padding: 4px 12px;
+    &:hover {
+      background: #f6f7f8;
+      svg {
+        fill: #000;
+      }
+      a {
+        color: #000;
+      }
+    }
+    &.selected {
+      background: #f6f7f8;
+      svg {
+        fill: #0079d3;
+      }
+      a, span {
+        color: #0079d3;
+      }
+    }
+  }
+
+  span {
+    display: block;
+  }
+
+  svg {
+    fill: #878A8C;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #878A8C;
+    margin-right: 10px;
+  }
+}
