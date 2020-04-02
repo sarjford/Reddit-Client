@@ -35,7 +35,6 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
     {
@@ -44,9 +43,6 @@ module.exports = {
         component: require.resolve(`${__dirname}/src/components/layout`),
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
   ],
   developMiddleware: app => {
     app.use(
@@ -60,13 +56,3 @@ module.exports = {
     )
   },
 }
-
-
-  // developMiddleware: app => {
-  //   app.use(
-  //     "/api",
-  //     proxy({
-  //       target: "http://localhost:4000",
-  //     })
-  //   )
-  // },
