@@ -1,20 +1,48 @@
-// import React from "react"
-// import {Link} from "gatsby"
-// import PropTypes from "prop-types"
+import React, { useState } from 'react';
 
-// import { AppProvider } from "./context"
+import Comments from './comments';
 
-// import "./layout.css"
+import "./listingContainer.scss"
 
-// const Listing = (props) => {
 
-//   return (
-//     <div>{props.title}</div>
-//   )
-// }
+const Listing = (props) => {
+  const [showComments, setShowComments] = useState(false);
 
-// // Listing.propTypes = {
-// //   children: PropTypes.node.isRequired,
-// // }
+  return (
+    <li className="tile">
+      <button onClick={() => setShowComments(true)}>
+        <div className="gray-column"></div>
+          <div className="wrapper">
+            <div className="header">
+              <span>r/{props.subreddit}</span>
+              <span> &#8226; </span>
+              <span>Posted by {props.author}</span>
+            </div>
+            <div className="content">
+              <h3>{props.title}</h3>
+              {props.thumbnail.indexOf('http') > -1
+                && <img src={props.thumbnail} alt="feafeawe"/>}
+            </div>
+          </div>
+      </button>
 
-// export default Listing
+      {showComments && 
+        <Comments 
+          subreddit={props.subreddit}
+          id={props.id}
+          subreddit={props.subreddit}
+          author={props.author}
+          title={props.title}
+          setShowComments={setShowComments}
+          mediaType={props.mediaType}
+          media={props.media}
+          video={props.video}
+          image={props.image}
+        />
+      }
+
+    </li>
+  )
+}
+
+export default Listing;

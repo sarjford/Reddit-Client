@@ -1,10 +1,7 @@
 import React from "react"
 
-
-const initialState = {
-  device: typeof window !== 'undefined' ? (window.innerWidth < 768 ? 'mobile' : 'desktop' ) : '',
-  pathname: typeof window !== 'undefined' ? window.location.pathname : ''
-}
+// wrapper to pass around global state using react's context API
+const initialState = {}
 const AppContext = React.createContext(initialState)
 const Provider = AppContext.Provider
 const AppConsumer = AppContext.Consumer

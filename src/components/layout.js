@@ -1,22 +1,17 @@
-import React from "react"
-import {Link} from "gatsby"
-import PropTypes from "prop-types"
-import Header from "./header"
+import React from 'react';
+import PropTypes from 'prop-types';
+import Navigation from './navigation';
+import Header from './header';
+import { AppProvider } from './context';
 
-import { AppProvider } from "./context"
-
-import "./layout.css"
-
-
+import './layout.scss';
 
 
 const Layout = ({ children }) => {
-
-  console.log(Header)
-
   return (
     <AppProvider>
       <Header />
+      <Navigation />
       <main>{children}</main>
     </AppProvider>
   )
@@ -26,5 +21,5 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default Layout;
 

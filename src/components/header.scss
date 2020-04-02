@@ -1,6 +1,22 @@
-.app-header {
-  display: flex;
+.app-nav {
   font-size: 14px;
+
+  
+  p {
+    font-size: 14px;
+    margin-bottom: 8px;
+    margin-top: 20px;
+  }
+
+  .nav-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 10px;
+    @media(min-width: 480px) {
+      flex-direction: row;
+    }
+  }
 
   .link {
     border-radius: 20px;
@@ -43,5 +59,22 @@
     text-decoration: none;
     color: #878A8C;
     margin-right: 10px;
+  }
+}
+
+
+
+header {
+  padding: 10px 18px;
+  margin-bottom: 10px;
+  div {
+    display: flex;
+  }
+  svg:first-child {
+    width: 36px;
+    margin-right: 10px;
+  }
+  svg:last-child {
+    width: 56px;
   }
 }

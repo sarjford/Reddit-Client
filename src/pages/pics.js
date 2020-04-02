@@ -1,38 +1,23 @@
-// import React, { useState, useEffect } from 'react';
-// // import { Link } from "gatsby"
+import React from 'react';
+
+import PropTypes from "prop-types"
+import ListingContainer from "../components/listingContainer"
 
 
-// import PropTypes from "prop-types"
-// import ListingContainer from "../components/listingContainer"
+const PicsPage = (props) => {
+  return (
+    <div>
+      <ListingContainer
+        category="pics"
+        endpoint="pics"
+      />
+    </div>
+  )
+}
 
-// // import Layout from "../components/layout"
-// // import Image from "../components/image"
-// // import SEO from "../components/seo"
-
-
-// const PicsPage = (props) => {
-
-//   // console.log(props.location.pathname)
-
-
-//   // const [seconds, setSeconds] = useState();
-
-//   // useEffect(() => {
-
-//   // });
-
-//   return (
-//     <div>
-//       <ListingContainer
-//         endpoint="subreddit"
-//         category="new"
-//       />
-//     </div>
-//   )
+// IndexPage.propTypes = {
+//   children: PropTypes.node.isRequired,
 // }
 
-// // IndexPage.propTypes = {
-// //   children: PropTypes.node.isRequired,
-// // }
+export default PicsPage
 
-// export default PicsPage

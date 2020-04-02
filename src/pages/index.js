@@ -1,40 +1,22 @@
-import React, { 
-  // useState,
-  useEffect } from 'react';
-// import { Link } from "gatsby"
+import React from 'react';
 
-
-import PropTypes from "prop-types"
-import ListingContainer from "../components/listingContainer"
-
-// import Layout from "../components/layout"
-// import Image from "../components/image"
-// import SEO from "../components/seo"
+import PropTypes from 'prop-types';
+import ListingContainer from '../components/listingContainer';
 
 
 const IndexPage = (props) => {
-
-  // console.log(props.location.pathname)
-
-
-  // const [seconds, setSeconds] = useState();
-
-  useEffect(() => {
-
-  });
-
   return (
     <div>
       <ListingContainer
-        endpoint="subreddit"
-        category="new"
+        endpoint="all"
+        category="hot"
       />
     </div>
   )
 }
 
-// IndexPage.propTypes = {
-//   children: PropTypes.node.isRequired,
-// }
+IndexPage.propTypes = {
+  children: PropTypes.node.isRequired,
+}
 
-export default IndexPage
+export default IndexPage;

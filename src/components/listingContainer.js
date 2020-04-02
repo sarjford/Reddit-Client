@@ -1,113 +1,122 @@
-import React, { 
-  useEffect,
-  useReducer,
-  useCallback,
-  useRef,
-  useState
-} from 'react';
-import {Link} from "gatsby"
-import axios from "axios"
+import React, { Component } from 'react';
+import axios from 'axios';
+
+import Listing from './listing';
+import Search from './search';
+
+import "./listingContainer.scss"
 
 
-// import PropTypes from "prop-types"
+// container that holds all the posts returned in the API
+class ListingContainer extends Component {
 
-// import { AppProvider } from "./context"
+  constructor(props) {
+    super(props)
 
-import "./layout.css"
-
-const ListingContainer = (props) => {
-
-  const listingReducer = (state, action) => {
-    switch (action.type) {
-      case 'CONCAT_LISTINGS':
-        return { ...state, data: state.data.concat(action.listings) }
-      case 'FETCH_LISTINGS':
-        return { ...state, fetching: action.fetching }
-      default:
-        return state;
+    this.state = {
+      listingData: [],
+      showComments: false,
+      showSearchResults: false
     }
-  }
-  const [listingData, listingDispatch] = useReducer(listingReducer,{ data:[], fetching: true })
 
-  const pageReducer = (state, action) => {
-    switch (action.type) {
-      case 'ADVANCE_PAGE':
-        return { ...state, count: state.count + 25 }
-      default:
-        return state;
+    this.pagination = null;
+    this.data = [];
+  }
+
+  componentDidMount() {
+    this.loadMoreListings();
+  }
+
+  // call two different endpoints depending on which page calls user is on
+  fetchListings = () => {
+    let url;
+    if (this.props.endpoint === 'pics') {
+      url = `/.netlify/functions/getPics`;
+    } else {
+      url = `/.netlify/functions/getListings?category=${this.props.category}&after=${this.pagination}`;
     }
-  }
-  const [ currentPage, pageDispatch ] = useReducer(pageReducer, {count: 0})
 
-  const [pagination, setPagination] = useState(null)
- 
-
-  useEffect(() => {
-    console.log('pagination ', pagination)
-    listingDispatch({ type: 'FETCH_LISTINGS', fetching: true })
-
-    axios.get(`/.netlify/functions/getListings?endpoint=${props.endpoint}&category=${props.category}&count=${currentPage.count}&after=${pagination}`)
-
+    axios.get(url)
       .then(( data ) => {
-        // console.log('DATA ', data)
-        const listings = data.data.data.children
-        const pagination = data.data.data.after
-        console.log('PAGINATION ', pagination)
-        setPagination(pagination)
-        listingDispatch({ type: 'CONCAT_LISTINGS', listings })
-        listingDispatch({ type: 'FETCH_LISTINGS', fetching: false })
+        this.pagination = data.data.data.after;
+        this.data = this.data.concat(data.data.data.children);
+        window.data = this.data;
+
+        if (this.props.endpoint === 'pics') {
+          this.setState({
+            listingData: this.state.listingData.concat(data.data.data.children),
+            showSearchResults: true
+          });
+        } else {
+          this.setState({
+            listingData: this.state.listingData.concat(data.data.data.children),
+            showSearchResults: false
+          });
+        }
       })
       .catch(e => {
-        listingDispatch({ type: 'FETCH_LISTINGS', fetching: false })
         return e
-      })
-  }, [ listingDispatch, currentPage.count ])
+      });
+  }
 
+  // infinite scroll - uses intersection API to detect when bottom of
+  //the page is in the viewport, loads more posts
+  loadMoreListings = () => {
+    let bottomBoundary = document.getElementById('page-bottom-boundary');
+    let observer = new IntersectionObserver((entries, observer) => { 
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0 && !this.state.showSearchResults) {
+          this.fetchListings();
+        }
+      });
+    });
+    observer.observe(bottomBoundary);
+  }
+  
+  // handler for search submission; filters data to match input value and sets state with matching posts
+  submitSearch = (term) => {
+    let target = term.toLowerCase();
+    this.setState({
+      listingData: this.data.filter((listing) => listing.data.title.toLowerCase().indexOf(target) > -1),
+      showSearchResults: true
+    })
+  }
 
-  let bottomBoundaryRef = useRef(null);
-  const scrollObserver = useCallback(
-    node => {
-      new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio > 0) {
-            pageDispatch({ type: 'ADVANCE_PAGE' });
-          }
-        });
-      }).observe(node);
-    },
-    [pageDispatch]
-  );
-  useEffect(() => {
-    if (bottomBoundaryRef.current) {
-      scrollObserver(bottomBoundaryRef.current);
-    }
-  }, [scrollObserver, bottomBoundaryRef]);
+  render() {
+    return (
+      <div>
+        <Search 
+          submitSearch={this.submitSearch}
+          page={this.props.category}
+        />
 
-  return (
-    <div>
-      <ul>
-        {listingData.data.map((listing, index) =>
-          <Listing
-            title={listing.data.title}
-            url={listing.data.url}
-            key={index}
-          />
-        )}
-      </ul>
-      <div id='page-bottom-boundary' style={{ border: '1px solid red' }} ref={bottomBoundaryRef}></div>
-    </div>
-  )
+        <ul>
+          {this.state.listingData.map((listing, index) => (
+            <Listing
+              title={listing.data.title}
+              comments={listing.data.permalink}
+              thumbnail={listing.data.thumbnail}
+              text={listing.data.selftext}
+              author={listing.data.author}
+              subreddit={listing.data.subreddit}
+              category={this.props.category}
+              id={listing.data.id}
+              key={index}
+              video={listing.data.is_video
+                ? listing.data.media.reddit_video.fallback_url
+                : null}
+              image={listing.data.preview
+                ? listing.data.url
+                : null}
+            />)
+          )}
+        </ul>
+        <div id="page-bottom-boundary" className="bottom-boundary">
+          {!this.state.showSearchResults && <p className="tile">Loading...</p>}
+        </div>
+      </div>
+    )
+  }
 }
 
-const Listing = (props) => {
-  console.log(props)
-  return (
-    <li>
-      <Link to={props.url}>
-        <h2>{props.title}</h2>
-      </Link>
-    </li>
-  )
-}
-
-export default ListingContainer
+export default ListingContainer;

@@ -1,0 +1,43 @@
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1em;
+  background: #DAE0E6;
+  padding: 20px;
+}
+
+#gatsby-focus-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+p, h3, ul, h4 {
+  margin: 0;
+  padding-inline-start: 0;
+}
+
+button {
+  margin: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.tile {
+  border: 1px solid rgb(204,204,204);
+  background: #fff;
+  border-radius: 4px;
+}
+
+button:hover {
+  cursor: pointer;
+}
