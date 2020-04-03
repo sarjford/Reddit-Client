@@ -112,7 +112,7 @@ class ListingContainer extends Component {
           )}
         </ul>
         <div id="page-bottom-boundary" className="bottom-boundary">
-          {!this.state.showSearchResults && <p className="tile">Loading...</p>}
+          {!this.state.showSearchResults && <p className="tile">Loading posts...</p>}
         </div>
       </div>
     )
